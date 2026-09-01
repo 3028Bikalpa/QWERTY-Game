@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Counterfactuals & Alternative Technical Realities — CD490</title>
+  <style>
+    :root{
+      --paper:#f6f3eb; --ink:#0b2340; --accent:#8a2b0f; --olive:#3b4b2f; --stamp:#b21f2d;
+      --mono: "Courier New", Courier, monospace; --sans: "Helvetica Neue", Arial, sans-serif;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(#fbf8f2,#f1eee6);font-family:var(--sans);color:var(--ink);}
+    .sheet{max-width:980px;margin:28px auto;padding:28px;background:var(--paper);box-shadow:0 10px 30px rgba(11,35,64,0.12);border:1px solid rgba(11,35,64,0.06)}
+    header{display:flex;align-items:center;gap:18px}
+    .logo{width:64px;height:64px;background:linear-gradient(90deg,#e9e6dd,#fff);border:2px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--olive)}
+    h1{font-size:20px;margin:0}
+    .hero{margin-top:18px;padding:18px;border:2px dashed rgba(11,35,64,0.06);background:linear-gradient(180deg,rgba(255,255,255,0.6),transparent)}
+    .cta{display:inline-block;margin-top:12px;padding:10px 14px;background:#fff;border:2px solid rgba(11,35,64,0.08);box-shadow:0 4px 8px rgba(11,35,64,0.06);font-weight:700;color:var(--ink);text-decoration:none;border-radius:4px;font-family:var(--mono)}
+    .cta.stamp{position:relative}
+    .cta .stamp-mark{display:inline-block;margin-left:10px;color:var(--stamp);font-weight:900;transform:rotate(-10deg)}
+    .hero h2{font-family:var(--mono);font-size:28px;margin:0;color:var(--ink)}
+    .muted{color:#6b6b6b;font-size:14px}
+
+    /* Timeline */
+    .timeline{margin-top:26px;padding:18px;background:#fff;border:1px solid rgba(11,35,64,0.04)}
+    .nodes{display:flex;gap:12px;align-items:center;overflow:auto;padding:12px 0}
+    .node{min-width:120px;padding:12px;background:#f7f6f3;border-radius:6px;border:1px solid rgba(11,35,64,0.05);cursor:pointer}
+    .node.active{outline:3px solid rgba(58,85,150,0.12);box-shadow:0 4px 14px rgba(11,35,64,0.06)}
+    .panel{margin-top:12px;padding:12px;font-size:15px}
+
+    /* STEEP-V */
+    .grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+    .card{flex:1 1 200px;padding:12px;background:linear-gradient(#fff,#fbfbfa);border:1px solid rgba(11,35,64,0.04);min-height:80px}
+
+    /* Dator arcs */
+    .arcs{display:flex;gap:8px;margin-top:18px}
+    .arc{padding:10px 12px;background:#efe9df;border-radius:6px;cursor:pointer;border:1px solid rgba(11,35,64,0.04)}
+    .arc.active{background:var(--accent);color:#fff}
+
+    /* Time slice scrolly */
+    .scrolly{margin-top:20px}
+    .step{opacity:0;transform:translateY(18px);transition:all .6s ease;margin:18px 0;padding:14px;background:#fff;border-left:6px solid rgba(11,35,64,0.06)}
+    .step.visible{opacity:1;transform:none}
+
+    /* Artifact */
+    .artifact{display:flex;gap:18px;align-items:flex-start;margin-top:20px}
+    .form{flex:1;padding:18px;background:linear-gradient(#fff,#f6f3eb);border:1px solid rgba(11,35,64,0.06);position:relative}
+    .form .stamp{position:absolute;right:18px;top:18px;font-weight:900;color:var(--stamp);font-family:var(--mono);transform:rotate(-14deg);font-size:42px;opacity:0;transition:all .4s ease}
+    .form.rejected .stamp{opacity:1;transform:rotate(-8deg) translateY(-6px);}
+    .plaque{width:220px;padding:12px;background:#f1efe8;border:1px solid rgba(11,35,64,0.06);font-family:var(--mono)}
+
+    .controls{margin-top:12px;display:flex;gap:12px;align-items:center}
+    .small{font-size:13px;color:#666}
+
+    footer{margin-top:30px;font-size:13px;color:#444;border-top:1px dashed rgba(11,35,64,0.06);padding-top:12px}
+
+    @media(max-width:760px){.artifact{flex-direction:column}.arcs{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <header>
+      <div class="logo">BUREAU
+      </div>
+      <div>
+        <h1>Counterfactuals & Alternative Technical Realities — CD490</h1>
+        <div class="muted">You are browsing an alternate 1962: the Bureau of Motion Economy governs design.</div>
+      </div>
+    </header>
+
+    <section class="hero" id="hero">
+      <h2>What if the U.S. Treasury adopted the Dvorak keyboard in 1945 — and it became federal design doctrine?</h2>
+      <p class="muted">A speculative-design archive: the Bureau of Motion Economy, 1962. Centerpiece: Form ME-12 — Motion Economy Non-Conformance Notice.</p>
+      <div><a class="cta" href="game.html">Take the Cadence Certification Trial <span class="stamp-mark">▶</span></a></div>
+    </section>
+
+    <section class="timeline" id="timeline">
+      <h3>Historical Pivot &amp; Timeline</h3>
+      <div class="nodes" role="list">
+        <div class="node" data-id="1932">1932<br><span class="small">Dvorak genesis</span></div>
+        <div class="node" data-id="1945">1945<br><span class="small">Pivot — Federal adoption</span></div>
+        <div class="node" data-id="1956">1956<br><span class="small">Cold War codification</span></div>
+        <div class="node" data-id="1962">1962<br><span class="small">Artifact time slice</span></div>
+      </div>
+      <div class="panel" id="timeline-panel">Click a year to reveal details.</div>
+    </section>
+
+    <section id="steep">
+      <h3>STEEP-V Analysis</h3>
+      <div class="grid">
+        <div class="card" data-key="Society"><strong>Society:</strong> <div class="small">Hover or click to reveal</div></div>
+        <div class="card" data-key="Technology"><strong>Technology:</strong> <div class="small">Hover or click to reveal</div></div>
+        <div class="card" data-key="Economic"><strong>Economic:</strong> <div class="small">Hover or click to reveal</div></div>
+        <div class="card" data-key="Environmental"><strong>Environmental:</strong> <div class="small">Hover or click to reveal</div></div>
+        <div class="card" data-key="Political"><strong>Political:</strong> <div class="small">Hover or click to reveal</div></div>
+        <div class="card" data-key="Values"><strong>Values:</strong> <div class="small">Hover or click to reveal</div></div>
+      </div>
+      <div class="panel" id="steep-panel" style="margin-top:10px;padding:12px;background:#fff;border:1px solid rgba(11,35,64,0.04);">Select a cell to read details.</div>
+    </section>
+
+    <section id="dator">
+      <h3>Dator's 4 Arcs</h3>
+      <div class="arcs">
+        <div class="arc" data-arc="Growth">Growth</div>
+        <div class="arc" data-arc="Collapse">Collapse</div>
+        <div class="arc" data-arc="Discipline">Discipline</div>
+        <div class="arc active" data-arc="Transformation">Transformation</div>
+      </div>
+      <div class="panel" id="arcs-panel">Transformation (default): design doctrine becomes a regulatory regime shaping aerospace ergonomics.</div>
+    </section>
+
+    <section class="scrolly" id="timeslice">
+      <h3>The 1962 Time Slice — Walter Kowalski</h3>
+      <div class="step" data-step="horizon"><strong>Horizon Scanning:</strong><p class="small">Signals and anticipations for 1962, pulled from the project document.</p></div>
+      <div class="step" data-step="infra"><strong>Infrastructure:</strong><p class="small">Bureau structure, certification workflows, and MEI compliance tests.</p></div>
+      <div class="step" data-step="day"><strong>Day in the Life:</strong><p class="small">Follow Walter Kowalski, an aerospace engineer, as he drafts control panels and completes ME-12 forms.</p></div>
+      <div class="step" data-step="ripple"><strong>Ripple Effects:</strong><p class="small">How cockpit design choices propagate through procurement and training.</p></div>
+      <div class="step" data-step="anomalies"><strong>Anomalies:</strong><p class="small">Noted edge cases and design compromises recorded in the archive.</p></div>
+      <div class="step" data-step="extrapolate"><strong>Extrapolation Leap:</strong><p class="small">Speculative futures and lock-in consequences.</p></div>
+    </section>
+
+    <section id="artifact">
+      <h3>The Artifact — Motion Economy Non-Conformance Notice (Form ME-12)</h3>
+      <div class="artifact">
+        <div class="form" id="me-form">
+          <div style="font-family:var(--mono);font-size:13px">FORM: ME-12 — Motion Economy Non-Conformance Notice</div>
+          <div style="margin-top:10px;font-size:14px">
+            <strong>Issued To:</strong> Walter Kowalski<br>
+            <strong>Project:</strong> Mercury Capsule Control Panel (design no. 62-MC-17)<br>
+            <strong>Date:</strong> 1962-07-14<br>
+            <strong>Non-Conformance:</strong> Reach cluster spacing exceeds certified MEI threshold (0.82)<br>
+          </div>
+          <div class="stamp" id="stamp">REJECTED</div>
+
+          <div class="controls">
+            <div>
+              <label class="small">Motion Economy Index (simulated): <span id="mei-val">0.85</span></label>
+              <input id="mei-slider" type="range" min="0.50" max="1.00" step="0.01" value="0.85" />
+            </div>
+            <div class="small">Threshold: 0.82</div>
+          </div>
+
+          <p class="small" style="margin-top:12px">Click fields to reveal the archived notes. The slider simulates compliance testing — crossing below 0.82 triggers the REJECTED stamp.</p>
+        </div>
+
+        <div class="plaque">
+          <div style="font-weight:700">MEI Certification Plaque</div>
+          <div class="small" style="margin-top:8px">Bureau of Motion Economy</div>
+          <div style="margin-top:8px;font-family:var(--mono)">Cert ID: MEI-1962-0047</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="materials">
+      <h3>Materials &amp; Fabrication (Zones A / B / C)</h3>
+      <div class="panel">
+        <p class="small">Phase 3 breakdown and real-world build materials recorded in the attached project document. This section reproduces those lists as a build reference.</p>
+        <ul>
+          <li>Zone A: aluminum chassis, bakelite switches, anodized fasteners</li>
+          <li>Zone B: carbon-copy paper replicas, rubber stamp materials, brass plaque</li>
+          <li>Zone C: archival storage crate, humidity control inserts, acid-free sleeves</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="notation">
+      <h3>Contextual Notation</h3>
+      <div class="panel">
+        <p class="small">Warning: This site is a speculative counterfactual produced for academic purposes. Treat reproduced documents as fictional artifacts unless marked otherwise in the source file.</p>
+      </div>
+    </section>
+
+    <section id="theory">
+      <h3>Theoretical Alignment</h3>
+      <div class="panel">
+        <p class="small">This project connects path-dependence and lock-in theory to design doctrine — see the attached project document for full citations and course framing.</p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="muted">Built from the CD490 project file: final.pdf — use the attached document as the source of truth for exact phrasing and field values.</div>
+    </footer>
+  </div>
+
+  <script>
+    // Timeline interactions
+    document.querySelectorAll('.timeline .node').forEach(n=>n.addEventListener('click',ev=>{
+      document.querySelectorAll('.timeline .node').forEach(x=>x.classList.remove('active'));
+      n.classList.add('active');
+      const id=n.getAttribute('data-id');
+      const panel=document.getElementById('timeline-panel');
+      let html='';
+      if(id==='1932') html='<strong>1932</strong> — Dvorak layout genesis (real-world history).';
+      if(id==='1945') html='<strong>1945</strong> — Federal pivot: Treasury does NOT cancel Dvorak adoption. Counterfactual branch begins.';
+      if(id==='1956') html='<strong>1956</strong> — Motion Economy doctrine codified across procurement.';
+      if(id==='1962') html='<strong>1962</strong> — Time slice: Bureau of Motion Economy issues ME-12 forms.';
+      panel.innerHTML=html;
+    }));
+
+    // STEEP-V interactions
+    const steepData={
+      'Society':'Increased typing literacy; standardized training across agencies; shift in clerk demographics.',
+      'Technology':'Ergonomic controls prioritized; reach-minimizing layouts adopted for panels and consoles.',
+      'Economic':'Procurement favors ME-compliant manufacturers; retrofit markets emerge.',
+      'Environmental':'Materials chosen for ease of motion and durability; increased disposable components for compliance.',
+      'Political':'Regulatory oversight by Bureau of Motion Economy; certification becomes political leverage.',
+      'Values':'Efficiency and motion-minimization are institutionalized as design virtues.'
+    };
+    document.querySelectorAll('#steep .card').forEach(c=>{
+      c.addEventListener('click',()=>{
+        document.getElementById('steep-panel').textContent=steepData[c.getAttribute('data-key')];
+      });
+    });
+
+    // Dator arcs
+    document.querySelectorAll('.arc').forEach(a=>a.addEventListener('click',()=>{
+      document.querySelectorAll('.arc').forEach(x=>x.classList.remove('active'));
+      a.classList.add('active');
+      const panel=document.getElementById('arcs-panel');
+      const arc=a.getAttribute('data-arc');
+      const map={
+        'Growth':'Growth: design regimes fuel industrial expansion and widespread retrofitting.',
+        'Collapse':'Collapse: rigid standards cause brittle systems and gradual failure modes.',
+        'Discipline':'Discipline: tight regulation leads to standardized, low-variance outcomes.',
+        'Transformation':'Transformation: practices reshape institutions and everyday affordances (default).'
+      };
+      panel.textContent=map[arc]||'';
+    }));
+
+    // Scrollytelling reveal
+    const steps=document.querySelectorAll('.scrolly .step');
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('visible');
+      });
+    },{threshold:0.25});
+    steps.forEach(s=>obs.observe(s));
+
+    // MEI slider & stamp
+    const slider=document.getElementById('mei-slider');
+    const valLabel=document.getElementById('mei-val');
+    const form=document.getElementById('me-form');
+    const stamp=document.getElementById('stamp');
+    const threshold=0.82;
+    function updateMEI(v){
+      valLabel.textContent=v;
+      if(parseFloat(v) < threshold){
+        form.classList.add('rejected');
+        stamp.textContent='REJECTED';
+      } else {
+        form.classList.remove('rejected');
+        stamp.textContent='APPROVED';
+        // subtle approved look
+        stamp.style.color='rgba(40,120,40,0.9)';
+      }
+    }
+    slider.addEventListener('input',(e)=>{ updateMEI(e.target.value); stamp.style.color=''; });
+    // initialize
+    updateMEI(slider.value);
+
+    // Small interaction: clicking form fields reveals archival notes (placeholder behavior)
+    document.querySelectorAll('#me-form strong').forEach(s=>s.addEventListener('click',()=>{
+      alert('Archived note: see final.pdf for the verbatim entry.');
+    }));
+  </script>
+</body>
+</html>
