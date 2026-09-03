@@ -81,6 +81,7 @@
 
       <div class="right">
         <div class="stats">
+          <div class="stat-row"><div>Time</div><div id="time">0.0s</div></div>
           <div class="stat-row"><div>WPM</div><div id="wpm">0</div></div>
           <div class="stat-row"><div>Accuracy</div><div id="acc">100%</div></div>
           <div class="stat-row"><div>Motion Economy Index</div><div id="mei-score" style="font-family:var(--mono)">0.00</div></div>
@@ -132,16 +133,21 @@
       {label:'Longer phrases',pool:fixedPhrases.concat(common),qty:2}
     ];
 
-    let roundIndex=0, target='', typed='', startTime=0, timer=null, started=false;
+    let roundIndex=0, target='', typed='', startTime=0, timer=null, started=false, finalElapsed=0;
 
     const targetEl=document.getElementById('target-text');
     const typedEl=document.getElementById('typed');
+    const timeEl=document.getElementById('time');
     const wpmEl=document.getElementById('wpm');
     const accEl=document.getElementById('acc');
     const meiEl=document.getElementById('mei-score');
     const results=document.getElementById('results');
     const resultStamp=document.getElementById('result-stamp');
     const resultText=document.getElementById('result-text');
+
+    function stopTimer(){
+      if(timer){ clearInterval(timer); timer=null; }
+    }
 
     function buildTarget(){
       const r=rounds[roundIndex];
@@ -150,13 +156,21 @@
       target = parts.join(' ').toUpperCase();
       targetEl.textContent=target;
       typed=''; typedEl.textContent='';
-      started=false; startTime=0; updateStats(); results.classList.remove('show');
+      stopTimer();
+      started=false; startTime=0; finalElapsed=0; updateStats(); results.classList.remove('show');
+    }
+
+    // elapsed time in seconds: live while typing, frozen once the round ends
+    function getElapsed(){
+      return started ? (Date.now()-startTime)/1000 : finalElapsed;
     }
 
     function updateStats(){
-      const elapsed = started ? (Date.now()-startTime)/1000 : 0.001;
-      const cpm = (typed.length / 5) / (elapsed/60); // approximate WPM
-      const wpm = Math.max(0, Math.round(cpm));
+      const elapsed = getElapsed();
+      timeEl.textContent = elapsed.toFixed(1)+'s';
+      const safeElapsed = Math.max(elapsed, 0.001);
+      const cpm = (typed.length / 5) / (safeElapsed/60); // approximate WPM
+      const wpm = typed.length ? Math.max(0, Math.round(cpm)) : 0;
       wpmEl.textContent = isFinite(wpm)?wpm:0;
       // accuracy
       let correct=0;
@@ -200,7 +214,12 @@
     }
 
     function insertChar(ch){
-      if(!started){ started=true; startTime=Date.now(); }
+      if(!started){
+        started=true;
+        startTime=Date.now();
+        stopTimer();
+        timer=setInterval(updateStats,100);
+      }
       typed += ch;
       renderTyped();
       const stats = updateStats();
@@ -208,7 +227,10 @@
     }
 
     function finishRound(){
-      started=false; const {wpm,acc,mei} = updateStats();
+      if(started){ finalElapsed = (Date.now()-startTime)/1000; }
+      started=false;
+      stopTimer();
+      const {wpm,acc,mei} = updateStats();
       results.classList.add('show');
       const pass = (acc >= 90 && wpm >= 20);
       resultStamp.textContent = pass? 'CERTIFIED' : 'RE-CERTIFICATION REQUIRED';
@@ -218,7 +240,12 @@
 
     // Buttons
     document.getElementById('start').addEventListener('click',()=>{ buildTarget(); typedEl.focus(); });
-    document.getElementById('retry').addEventListener('click',()=>{ typed=''; typedEl.textContent=''; results.classList.remove('show'); typedEl.focus(); });
+    document.getElementById('retry').addEventListener('click',()=>{
+      stopTimer();
+      typed=''; typedEl.textContent='';
+      started=false; startTime=0; finalElapsed=0;
+      results.classList.remove('show'); updateStats(); typedEl.focus();
+    });
     document.getElementById('new').addEventListener('click',()=>{ roundIndex = (roundIndex+1)%rounds.length; buildTarget(); });
     document.getElementById('next').addEventListener('click',()=>{ roundIndex = (roundIndex+1)%rounds.length; buildTarget(); });
 

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open -a \"Google Chrome\" /Users/bikki/Desktop/CD490/game.html)",
+      "Bash(open /Users/bikki/Desktop/CD490/game.html)"
+    ]
+  }
+}
